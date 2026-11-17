@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Dashboard — GENT'S STUDIO Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Guard: leave immediately if there is no session, before anything renders -->
+  <script>try{if(!sessionStorage.getItem("gs_admin_session"))location.replace("login.html?next=admin");}catch(e){location.replace("login.html");}</script>
+</head>
+<body class="admin-body">
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+  <aside class="sidebar" aria-label="Admin navigation">
+    <a class="brand sidebar__brand" href="admin.html"><span class="brand__mark">G</span><span class="brand__text">GENT'S <em>STUDIO</em></span></a>
+    <nav class="sidebar__nav">
+      <a href="#dashboard" class="sidebar__link" data-view="dashboard"><i>◧</i><span>Dashboard</span></a>
+      <a href="#appointments" class="sidebar__link" data-view="appointments"><i>▤</i><span>Appointments</span></a>
+      <a href="#customers" class="sidebar__link" data-view="customers"><i>◉</i><span>Customers</span></a>
+      <a href="#services" class="sidebar__link" data-view="services"><i>✂</i><span>Services</span></a>
+      <a href="#barbers" class="sidebar__link" data-view="barbers"><i>☗</i><span>Barbers</span></a>
+      <a href="#analytics" class="sidebar__link" data-view="analytics"><i>◔</i><span>Analytics</span></a>
+      <a href="#settings" class="sidebar__link" data-view="settings"><i>⚙</i><span>Settings</span></a>
+    </nav>
+    <button class="sidebar__link sidebar__logout" id="logout-btn"><i>⎋</i><span>Logout</span></button>
+  </aside>
+
+  <div class="admin-main">
+    <header class="topbar">
+      <button class="topbar__menu" id="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+      <div>
+        <h1 class="topbar__title" id="view-title">Dashboard</h1>
+        <p class="topbar__date" id="today-label"></p>
+      </div>
+      <div class="topbar__right">
+        <button class="btn btn--ghost btn--sm" id="refresh-btn">↻ Refresh</button>
+        <a class="btn btn--ghost btn--sm" href="index.html" target="_blank" rel="noopener">View site</a>
+        <div class="topbar__user"><span class="avatar" id="admin-avatar">A</span><span id="admin-name">Administrator</span></div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div id="admin-dev"></div>
+
+      <!-- DASHBOARD -->
+      <section class="view" id="view-dashboard">
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="chart-grid">
+          <div class="panel panel--wide"><div class="panel__head"><h2>Weekly bookings</h2><span class="muted small">Last 7 days</span></div><div class="chart-box"><canvas id="chart-weekly"></canvas></div></div>
+          <div class="panel"><div class="panel__head"><h2>Popular services</h2></div><div class="chart-box"><canvas id="chart-popular"></canvas></div></div>
+          <div class="panel panel--full"><div class="panel__head"><h2>Monthly revenue</h2><span class="muted small">Last 6 months</span></div><div class="chart-box"><canvas id="chart-revenue"></canvas></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h2>Recent appointments</h2><a href="#appointments" class="link-arrow small">View all →</a></div>
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <thead><tr><th>ID</th><th>Customer</th><th>Service</th><th>Barber</th><th>When</th><th>Status</th></tr></thead>
+              <tbody id="recent-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPOINTMENTS -->
+      <section class="view" id="view-appointments" hidden>
+        <div class="toolbar">
+          <input type="search" id="appt-search" class="toolbar__search" placeholder="Search ID, name, email, phone…" aria-label="Search appointments">
+          <input type="date" id="appt-date" aria-label="Filter by date">
+          <select id="appt-barber" aria-label="Filter by barber"><option value="">All barbers</option></select>
+          <select id="appt-status" aria-label="Filter by status"></select>
+          <button class="btn btn--ghost btn--sm" id="appt-clear">Clear</button>
+          <span class="toolbar__spacer"></span>
+          <button class="btn btn--gold btn--sm" id="appt-new">+ New appointment</button>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h2>All appointments</h2><span class="muted small" id="appt-count"></span></div>
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <thead><tr><th>ID</th><th>Customer</th><th>Service</th><th>Barber</th><th>Date</th><th>Price</th><th>Status</th><th class="actions">Actions</th></tr></thead>
+              <tbody id="appt-body"></tbody>
+            </table>
+          </div>
+          <div class="pager" id="appt-pager"></div>
+        </div>
+      </section>
+
+      <!-- CUSTOMERS -->
+      <section class="view" id="view-customers" hidden>
+        <div class="toolbar"><input type="search" id="cust-search" class="toolbar__search" placeholder="Search name, email or phone…" aria-label="Search customers"></div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th><th>Total spent</th><th class="actions"></th></tr></thead>
+              <tbody id="cust-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="view" id="view-services" hidden>
+        <div class="toolbar"><p class="muted">Changes apply to the public booking form immediately.</p><span class="toolbar__spacer"></span><button class="btn btn--gold btn--sm" id="svc-new">+ Add service</button></div>
+        <div class="card-grid" id="svc-grid"></div>
+      </section>
+
+      <!-- BARBERS -->
+      <section class="view" id="view-barbers" hidden>
+        <div class="toolbar"><p class="muted">Inactive barbers are hidden from customers but keep their history.</p><span class="toolbar__spacer"></span><button class="btn btn--gold btn--sm" id="brb-new">+ Add barber</button></div>
+        <div class="card-grid" id="brb-grid"></div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="view" id="view-analytics" hidden>
+        <div class="toolbar">
+          <label class="muted small" for="an-range">Period</label>
+          <select id="an-range"><option value="30d">Last 30 days</option><option value="90d">Last 90 days</option><option value="12m">Last 12 months</option><option value="all">All time</option></select>
+        </div>
+        <div class="stats-grid stats-grid--4" id="an-kpis"></div>
+        <div class="chart-grid">
+          <div class="panel panel--wide"><div class="panel__head"><h2>Bookings trend</h2></div><div class="chart-box"><canvas id="an-bookings"></canvas></div></div>
+          <div class="panel"><div class="panel__head"><h2>Service mix</h2></div><div class="chart-box"><canvas id="an-services"></canvas></div></div>
+          <div class="panel panel--wide"><div class="panel__head"><h2>Revenue</h2></div><div class="chart-box"><canvas id="an-revenue"></canvas></div></div>
+          <div class="panel"><div class="panel__head"><h2>Barber workload</h2></div><div class="chart-box"><canvas id="an-barbers"></canvas></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h2>Most popular services</h2></div>
+          <div class="table-wrap"><table class="table table--stack"><thead><tr><th>#</th><th>Service</th><th>Bookings</th><th>Revenue</th></tr></thead><tbody id="an-top"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="view-settings" hidden>
+        <div class="settings-grid">
+          <form class="panel" id="settings-form" novalidate>
+            <div class="panel__head"><h2>Studio profile</h2></div>
+            <div class="form-grid">
+              <div class="field"><label for="s-name">Studio name</label><input id="s-name" name="studioName" placeholder="GENT'S STUDIO"></div>
+              <div class="field"><label for="s-email">Contact email</label><input id="s-email" name="contactEmail" type="email"></div>
+              <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone"></div>
+              <div class="field"><label for="s-tz">Time zone</label><input id="s-tz" name="timezone" placeholder="Asia/Karachi"></div>
+              <div class="field"><label for="s-open">Opening time</label><input id="s-open" name="openTime" type="time"></div>
+              <div class="field"><label for="s-close">Closing time</label><input id="s-close" name="closeTime" type="time"></div>
+              <div class="field"><label for="s-slot">Slot interval (min)</label><select id="s-slot" name="slotInterval"><option>15</option><option selected>30</option><option>45</option><option>60</option></select></div>
+              <div class="field"><label for="s-buffer">Buffer between bookings (min)</label><input id="s-buffer" name="bufferMinutes" type="number" min="0" value="0"></div>
+              <div class="field field--full"><label for="s-addr">Address</label><input id="s-addr" name="address"></div>
+            </div>
+            <button type="submit" class="btn btn--gold mt-md">Save settings</button>
+          </form>
+          <div class="panel">
+            <div class="panel__head"><h2>Integration</h2></div>
+            <dl class="detail-list">
+              <div><dt>n8n endpoint</dt><dd id="set-endpoint" class="mono small"></dd></div>
+              <div><dt>Database</dt><dd>Google Sheets (via n8n)</dd></div>
+              <div><dt>Email</dt><dd>Gmail (via n8n)</dd></div>
+              <div><dt>Calendar</dt><dd>Google Calendar (via n8n)</dd></div>
+            </dl>
+            <p class="muted small mt-md">The endpoint is set in <code>js/config.js</code>. Admin passwords are stored as salted hashes in Google Sheets and never reach the browser.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dev-sample.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

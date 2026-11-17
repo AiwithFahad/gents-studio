@@ -1,0 +1,85 @@
+/* GENT'S STUDIO — booking & my-bookings pages */
+.page-inner main { padding-top: var(--header-h); min-height: calc(100vh - 70px); }
+.page-hero { padding: 70px 0 30px; background: radial-gradient(60% 100% at 90% 0%, rgba(213, 181, 138, .1), transparent 70%); border-bottom: 1px solid var(--line); }
+.page-hero .h1 { margin-bottom: .3em; }
+.page-hero .lead { margin: 0; }
+
+.booking-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 40px; padding: 50px 0 100px; align-items: start; }
+.booking-form { display: flex; flex-direction: column; gap: 22px; }
+.form-step { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; margin: 0; background: var(--bg-2); min-width: 0; }
+.form-step legend { display: flex; align-items: center; gap: 14px; padding: 0 10px; margin-left: -10px; font-family: var(--serif); font-size: 1.6rem; font-weight: 600; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); display: grid; place-items: center; font-family: var(--sans); font-size: .85rem; font-weight: 500; }
+
+.slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.slot { padding: 12px 8px; border-radius: var(--r-sm); background: var(--bg); border: 1px solid var(--line); color: var(--text); font-size: .88rem; transition: border-color .2s, background .2s, color .2s, transform .2s; }
+.slot:hover:not(:disabled) { border-color: var(--gold); transform: translateY(-1px); }
+.slot.is-selected { background: var(--gold); border-color: var(--gold); color: #17130D; font-weight: 600; }
+.slot:disabled { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+.slot-loading { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; color: var(--text-2); font-size: .9rem; padding: 10px 0; }
+.slot-hint { margin: 0; color: var(--text-2); font-size: .88rem; }
+.slot-hint:empty { display: none; }
+
+.booking-summary { position: sticky; top: calc(var(--header-h) + 24px); display: flex; flex-direction: column; gap: 18px; }
+.summary-card { background: var(--card); border: 1px solid var(--line-2); border-radius: var(--r-lg); padding: 30px; position: relative; overflow: hidden; }
+.summary-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--beige), var(--gold)); }
+.summary-list { margin: 0; }
+.summary-list div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--line); font-size: .93rem; }
+.summary-list dt { color: var(--text-2); }
+.summary-list dd { margin: 0; text-align: right; font-weight: 500; }
+.summary-total { display: flex; justify-content: space-between; align-items: baseline; padding: 20px 0 6px; }
+.summary-total span { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; color: var(--beige); }
+.summary-total strong { font-family: var(--serif); font-size: 2.4rem; color: var(--gold); font-weight: 600; }
+.summary-note { font-size: .82rem; color: var(--text-2); margin: 6px 0 0; }
+.summary-help { padding: 24px 28px; border: 1px solid var(--line); border-radius: var(--r-lg); }
+.summary-help h3 { font-family: var(--serif); font-size: 1.4rem; margin: 0 0 4px; font-weight: 600; }
+.summary-help p { color: var(--text-2); margin: 0 0 12px; font-size: .9rem; }
+
+/* Confirmation modal */
+.confirm { text-align: center; }
+.confirm__check { width: 66px; height: 66px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; font-size: 1.8rem; color: #17130D; background: var(--gold); animation: pop .5s var(--ease); }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.08); } 100% { transform: none; opacity: 1; } }
+.confirm__lead { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 20px; }
+.confirm__id { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; padding: 16px; border: 1px dashed var(--gold); border-radius: var(--r); margin-bottom: 18px; background: rgba(213, 181, 138, .05); }
+.confirm__id span { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-2); }
+.confirm__id strong { font-family: ui-monospace, Menlo, monospace; font-size: 1.25rem; color: var(--gold); letter-spacing: .06em; }
+.confirm .summary-list { text-align: left; }
+
+/* My bookings */
+.bookings-layout { padding: 50px 0 100px; display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 36px; align-items: start; }
+.lookup-card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 30px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: calc(var(--header-h) + 24px); }
+.lookup-card__alert { margin: 0; }
+.lookup-card__note { margin: 0; }
+.lookup-result:empty::before { content: "Your booking details will appear here."; display: grid; place-items: center; min-height: 260px; border: 1px dashed var(--line-2); border-radius: var(--r-lg); color: var(--text-2); font-family: var(--serif); font-size: 1.4rem; font-style: italic; }
+
+.appt-card { background: var(--card); border: 1px solid var(--line-2); border-radius: var(--r-lg); padding: 32px; }
+.appt-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.appt-card__head h2 { font-family: ui-monospace, Menlo, monospace; font-size: 1.3rem; margin: 0; letter-spacing: .04em; font-weight: 500; }
+.appt-card__head .eyebrow { margin-bottom: 4px; }
+.appt-card__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 24px 0; }
+.appt-card__grid span, .appt-card__notes span { display: block; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-2); margin-bottom: 4px; }
+.appt-card__grid strong { font-weight: 500; }
+.appt-card__notes { margin: 0 0 20px; padding: 14px 16px; background: var(--bg-2); border-radius: var(--r-sm); color: var(--beige); font-size: .92rem; }
+.appt-card__actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid var(--line); }
+
+.history { margin-top: 30px; }
+.history h3 { font-family: var(--serif); font-size: 1.6rem; margin: 0 0 16px; font-weight: 600; }
+.timeline { list-style: none; padding: 0; margin: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--line-2); }
+.timeline li { display: flex; gap: 18px; padding: 0 0 20px; position: relative; }
+.timeline__dot { width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 2px solid var(--gold); flex-shrink: 0; margin-top: 5px; z-index: 1; }
+.timeline strong { text-transform: capitalize; }
+.timeline p { margin: 2px 0; color: var(--text-2); font-size: .9rem; }
+.timeline time { font-size: .78rem; color: var(--text-2); opacity: .8; }
+
+/* Stage 2 additions */
+.slot-hint .btn { margin-left: 8px; vertical-align: middle; }
+.form-alert--ok a, .form-alert a { color: var(--gold); text-decoration: underline; }
+#edit-hint .btn { margin-left: 6px; }
+
+/* Stage 3: Stripe test-mode payment */
+.pay-box { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; text-align: left; margin: 18px 0; padding: 16px 18px; border-radius: var(--r); border: 1px solid rgba(143, 179, 217, .4); background: rgba(143, 179, 217, .06); }
+.pay-box div { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 200px; }
+.pay-box span { font-size: .82rem; color: var(--text-2); }
+.pay-box em { color: var(--info); font-style: normal; font-weight: 600; letter-spacing: .06em; }
+.pay-status--paid { color: var(--ok); }
+.pay-status--unpaid { color: var(--warn); }

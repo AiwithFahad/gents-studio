@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings — GENT'S STUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/booking.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="page-inner">
+  <header class="site-header is-solid">
+    <nav class="nav container" aria-label="Main">
+      <a class="brand" href="index.html"><span class="brand__mark">G</span><span class="brand__text">GENT'S <em>STUDIO</em></span></a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#barbers">Barbers</a></li>
+        <li><a href="booking.html">Book</a></li>
+        <li><a href="my-bookings.html">My Bookings</a></li>
+      </ul>
+      <button class="nav__burger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="bookings-page">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow eyebrow--line">Manage your visit</p>
+        <h1 class="h1">My <em>bookings</em></h1>
+        <p class="lead">Enter your appointment ID and the email or phone you booked with.</p>
+      </div>
+    </section>
+
+    <div class="container"><div id="dev-zone"></div></div>
+
+    <section class="container bookings-layout">
+      <form id="lookup-form" class="lookup-card" novalidate>
+        <div class="field">
+          <label for="appointmentId">Appointment ID</label>
+          <input id="appointmentId" name="appointmentId" placeholder="e.g. GS-20261115-4821" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="identity">Email or phone used to book</label>
+          <input id="identity" name="identity" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn--gold">Find booking</button>
+        <div id="lookup-alert" class="form-alert lookup-card__alert" role="alert"></div>
+        <p class="muted small lookup-card__note">For your privacy we only show a booking when both details match.</p>
+      </form>
+
+      <div id="lookup-result" class="lookup-result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer site-footer--slim">
+    <div class="container footer__base"><span>© <span data-year></span> GENT'S STUDIO</span><a href="booking.html">Make a new booking</a></div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/appointments.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book an Appointment — GENT'S STUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/booking.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="page-inner">
+  <header class="site-header is-solid">
+    <nav class="nav container" aria-label="Main">
+      <a class="brand" href="index.html"><span class="brand__mark">G</span><span class="brand__text">GENT'S <em>STUDIO</em></span></a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#barbers">Barbers</a></li>
+        <li><a href="booking.html">Book</a></li>
+        <li><a href="my-bookings.html">My Bookings</a></li>
+      </ul>
+      <button class="nav__burger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="booking-page">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow eyebrow--line">Reserve your chair</p>
+        <h1 class="h1">Book an <em>appointment</em></h1>
+        <p class="lead">Choose your service, barber and time. Takes about a minute.</p>
+      </div>
+    </section>
+
+    <div class="container"><div id="dev-zone"></div></div>
+
+    <section class="container booking-layout">
+      <form id="booking-form" class="booking-form" novalidate>
+        <fieldset class="form-step">
+          <legend><span class="step-num">1</span>Your details</legend>
+          <div class="form-grid">
+            <div class="field field--full">
+              <label for="name">Full name</label>
+              <input id="name" name="name" autocomplete="name" placeholder="e.g. James Walker" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" required>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-step">
+          <legend><span class="step-num">2</span>Service &amp; barber</legend>
+          <div class="form-grid">
+            <div class="field">
+              <label for="service">Service</label>
+              <select id="service" name="service" required><option value="">Loading services…</option></select>
+            </div>
+            <div class="field">
+              <label for="barber">Barber</label>
+              <select id="barber" name="barber" required><option value="">Loading barbers…</option></select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-step">
+          <legend><span class="step-num">3</span>Date &amp; time</legend>
+          <div class="form-grid">
+            <div class="field field--full">
+              <label for="date">Appointment date</label>
+              <input id="date" name="date" type="date" required>
+            </div>
+            <div class="field field--full">
+              <label id="time-label">Appointment time</label>
+              <input type="hidden" name="time" id="time">
+              <div class="slot-grid" id="slot-grid" role="group" aria-labelledby="time-label"></div>
+              <p class="slot-hint" id="slot-hint">Choose a service, barber and date to see available times.</p>
+            </div>
+            <div class="field field--full">
+              <label for="notes">Notes for your barber <span class="optional">(optional)</span></label>
+              <textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="Anything we should know? Reference style, sensitive skin…"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <div id="booking-alert" class="form-alert" role="alert"></div>
+        <button type="submit" class="btn btn--gold btn--lg btn--block">Confirm Booking</button>
+        <p class="muted small center mt-sm">By booking you agree to our 2-hour cancellation policy.</p>
+      </form>
+
+      <aside class="booking-summary">
+        <div class="summary-card">
+          <p class="eyebrow">Your appointment</p>
+          <h2 class="h3">Summary</h2>
+          <div id="booking-summary"></div>
+        </div>
+        <div class="summary-help">
+          <h3>Already booked?</h3>
+          <p>Change or cancel any time with your appointment ID.</p>
+          <a class="link-arrow" href="my-bookings.html">Manage my booking <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer site-footer--slim">
+    <div class="container footer__base"><span>© <span data-year></span> GENT'S STUDIO</span><a href="index.html">Back to home</a></div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>
