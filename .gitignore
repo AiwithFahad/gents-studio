@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment & secrets — NEVER commit credentials
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+service-account*.json
+
+# n8n local data / exports with credentials
+.n8n/
+n8n-exports-with-credentials/
+
+# Logs
+*.log
+logs/
+
+# OS & editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build / deploy artifacts
+dist/
+.netlify/
